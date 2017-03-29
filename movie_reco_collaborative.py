@@ -173,7 +173,6 @@ print "popular movies"
 
 
 
-#TODO: NEW VALUES APPENDED IN WRONG ORDER!!!!!!!!!!!!!!!!!!!!1
 
 #print "check,",did_rate[1183][233]	
 
@@ -314,6 +313,16 @@ all_predictions = movie_features.dot( user_prefs.T )
 # add back the ratings_mean column vector to my (our) predictions
 predictions_for_nikhil = all_predictions[:, 0:1] + ratings_mean
 print predictions_for_nikhil
-print newuser_ratings
+
+#print newuser_ratings
+
+# avg_ratings = ratings.sum(0)/(ratings != 0).sum(0)
+
+# print avg_ratings
+ind = np.argpartition(predictions_for_nikhil, -4)[-4:]
+ind2 = ratings_data['2movie_id'][ind]
+print items['movie title'][ind2]
 
 #TODO: Add recommended movie names!!!!!!!!1
+
+
