@@ -1,7 +1,3 @@
-
-# coding: utf-8
-# In[16]:
-
 import numpy as np
 import pandas as pd
 
@@ -13,7 +9,7 @@ num_users = 943
 # Column names available in the readme file
 
 #Reading users file(943*5):
-u_cols = ['user_id', 'age', 'sex', 'occupation', 'zip_code']
+u_cols = ['1user_id', 'age', 'sex', 'occupation', 'zip_code']
 users = pd.read_csv('ml-100k/u.user', sep='|', names=u_cols,
  encoding='latin-1')
 #print users
@@ -21,13 +17,13 @@ print users.shape       #i.e. dimensions: 943*5
 print users.head()
 
 #Reading ratings file(100000,4):
-r_cols = ['user_id', 'movie_id', 'rating', 'unix_timestamp']
-ratings = pd.read_csv('ml-100k/u.data', sep='\t', names=r_cols,
+r_cols = ['1user_id', '2movie_id', '3rating', '4unix_timestamp']
+ratings_data = pd.read_csv('ml-100k/u.data', sep='\t', names=r_cols,
  encoding='latin-1')
-print type(ratings)
+print type(ratings_data)
 #print ratings
-print ratings.shape
-print ratings.head()
+print ratings_data.shape
+print ratings_data.head()
 
 #Reading items file(1682*24):
 i_cols = ['movie id', 'movie title' ,'release date','video release date', 'IMDb URL', 'unknown', 'Action', 'Adventure',
@@ -50,53 +46,28 @@ print items['movie title'][87]
 print items['movie title'][93]
 print items['movie title'][97]
 
-#TODO: PUT ABOVE 10 IN MOVIERATINGS_UI_RUN.PY!!!!!!!!!!!!
 
-# In[21]:
-# create a logical matrix (matrix that represents whether a rating was made, or not)
-# != is the logical not operator
+pop_cols = ['movie_id', 'movie_title']
+pop_movies = pd.read_csv('ml-100k/popular.data', sep='\t', names=pop_cols, encoding='latin-1')
+l = len(pop_movies)
+print "l=",l
+print pop_movies.head()
+ind1 = np.random.randint(0, l-1)  
+ind2 = np.random.randint(0, l-1)
+while(ind2 == ind1):
+	ind2 = np.random.randint(0, l-1)
+ind3 = np.random.randint(0, l-1)
+while(ind3 == ind1 or ind3 == ind2):
+	ind3 = np.random.randint(0, l-1)
+print ind1
+print ind2
+print ind3
+print "POPULAR MOVIES:"
+print pop_movies['movie_title'][ind1]
+print pop_movies['movie_title'][ind2]
+print pop_movies['movie_title'][ind3]
 
-did_rate = (ratings != 0) * 1
-
-
-# In[22]:
-#print did_rate
-
-
-# In[23]:
-# Here's what happens if we don't multiply by 1
-#print (ratings != 0)
-
-
-# In[24]:
-#print (ratings != 0) * 1
-
-
-# In[25]:
-# Get the dimensions of a matrix using the shape property
-#print ratings.shape
-
-
-# In[26]:
-#print did_rate.shape
-
-
-# In[27]:
-# Let's make some ratings. A 10 X 1 column vector to store all the ratings I make
 newuser_ratings = np.zeros(num_movies,dtype=np.uint8)
-#print newuser_ratings
-
-
-# In[28]:
-
-# Python data structures are 0 based
-
-#print newuser_ratings[9] 
-
-
-# In[29]:
-
-# I rate 3 movies
 
 #TODO: EXTRACT FROM MOVIERATINGS_UI_RUN.PY SLIDERS!!!!!!!!!!!!!
 newuser_ratings[0] = 8
@@ -114,15 +85,15 @@ print newuser_ratings
 
 #append in ml-100k/u.data
 
-newuser_id = 999
+newuser_id = 944
 
-# rat_mat = ratings['rating'][0]
+# rat_mat = ratings['3rating'][0]
 # for i in range(1,1683):
-# 	rat_mat.append(ratings['rating'][i])
+# 	rat_mat.append(ratings['3rating'][i])
 # print "this"
 # print ratings.tail()
 #d is dictionary
-d = {'user_id': [newuser_id],  'movie_id': [0], 'rating': [newuser_ratings[0]] , 'unix_timestamp':[800000000]}
+d = {'1user_id': [newuser_id],  '2movie_id': [1], '3rating': [newuser_ratings[0]] , '4unix_timestamp':[800000000]}
 df = pd.DataFrame(d)
 print "Dataframe"
 print df
@@ -131,137 +102,80 @@ print df
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
 
-d = {'user_id': [newuser_id],  'movie_id': [49], 'rating': [newuser_ratings[49]] , 'unix_timestamp':[800000001]}
+d = {'1user_id': [newuser_id],  '2movie_id': [50], '3rating': [newuser_ratings[49]] , '4unix_timestamp':[800000001]}
 df = pd.DataFrame(d)
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
-d = {'user_id': [newuser_id],  'movie_id': [70], 'rating': [newuser_ratings[70]] , 'unix_timestamp':[800000002]}
+d = {'1user_id': [newuser_id],  '2movie_id': [71], '3rating': [newuser_ratings[70]] , '4unix_timestamp':[800000002]}
 df = pd.DataFrame(d)
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
-d = {'user_id': [newuser_id],  'movie_id': [63], 'rating': [newuser_ratings[63]] , 'unix_timestamp':[800000003]}
+d = {'1user_id': [newuser_id],  '2movie_id': [64], '3rating': [newuser_ratings[63]] , '4unix_timestamp':[800000003]}
 df = pd.DataFrame(d)
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
-d = {'user_id': [newuser_id],  'movie_id': [68], 'rating': [newuser_ratings[68]] , 'unix_timestamp':[800000004]}
+d = {'1user_id': [newuser_id],  '2movie_id': [69], '3rating': [newuser_ratings[68]] , '4unix_timestamp':[800000004]}
 df = pd.DataFrame(d)
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
-d = {'user_id': [newuser_id],  'movie_id': [71], 'rating': [newuser_ratings[71]] , 'unix_timestamp':[800000005]}
+d = {'1user_id': [newuser_id],  '2movie_id': [72], '3rating': [newuser_ratings[71]] , '4unix_timestamp':[800000005]}
 df = pd.DataFrame(d)
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
-d = {'user_id': [newuser_id],  'movie_id': [81], 'rating': [newuser_ratings[81]] , 'unix_timestamp':[800000006]}
+d = {'1user_id': [newuser_id],  '2movie_id': [82], '3rating': [newuser_ratings[81]] , '4unix_timestamp':[800000006]}
 df = pd.DataFrame(d)
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
-d = {'user_id': [newuser_id],  'movie_id': [87], 'rating': [newuser_ratings[87]] , 'unix_timestamp':[800000007]}
+d = {'1user_id': [newuser_id],  '2movie_id': [88], '3rating': [newuser_ratings[87]] , '4unix_timestamp':[800000007]}
 df = pd.DataFrame(d)
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
-d = {'user_id': [newuser_id],  'movie_id': [93], 'rating': [newuser_ratings[93]] , 'unix_timestamp':[800000008]}
+d = {'1user_id': [newuser_id],  '2movie_id': [94], '3rating': [newuser_ratings[93]] , '4unix_timestamp':[800000008]}
 df = pd.DataFrame(d)
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
 
-d = {'user_id': [newuser_id],  'movie_id': [97], 'rating': [newuser_ratings[97]] , 'unix_timestamp':[800000009]}
+d = {'1user_id': [newuser_id],  '2movie_id': [98], '3rating': [newuser_ratings[97]] , '4unix_timestamp':[800000009]}
 df = pd.DataFrame(d)
+
 df.to_csv('ml-100k/u.data',mode='a' ,sep='\t',index=False, header=False) 
+ratings_data = pd.read_csv('ml-100k/u.data', sep='\t', names=r_cols, encoding='latin-1')
 
-'''
-df.to_csv('ml-100k/u.data', sep = '\t')
+print ratings_data.tail()
+print "Ratings_data length: ",len(ratings_data)
 
-l = [newuser_id, 0, newuser_ratings[0], 8000000000] #list
-fd = open('ml-100k/u.data','a')
-print l
-s = ""
-for i in l:
-	s = s + str(i) + " "
-s = s + '\n'
-fd.write(s)
-fd.close()'''
+ratings = np.zeros((num_movies, num_users+1), dtype = np.uint8)
+for i in range(len(ratings_data)):
+	col = ratings_data['1user_id'][i]-1
+	row = ratings_data['2movie_id'][i]-1
+	ratings[row][col]=ratings_data['3rating'][i]
+	if(i == 0):
+		print row
+		print col
+		print ratings[row][col]
 
-ratings = pd.read_csv('ml-100k/u.data', sep='\t', names=r_cols, encoding='latin-1')
-print ratings.tail()
-#Now ratings are the new ratings
+did_rate = (ratings != 0) * 1
 
-'''
-# In[30]:
-# Update ratings and did_rate
+print "popular movies"
 
-#rat_mat = append(newuser_ratings, rat_mat, axis = 1)
-#print 'SONALI'
-#did_rate = append(((newuser_ratings != 0) * 1), did_rate, axis = 1)
+# ratings = np.zeros((num_movies, num_users+1), dtype = np.float)
+# for i in range(len(ratings)):
+# 	row = ratings_data['2movie_id'][i]-1
+# 	col = ratings_data['1user_id'][i]-1
+# 	ratings[row][col]=ratings_data['3rating'][i]
 
-'''
-'''
-# In[31]:
+# avg_ratings = ratings.sum(0)/(ratings != 0).sum(0)
 
-print ratings
-
-
-# In[32]:
-
-ratings.shape
+# print avg_ratings
+# ind = np.argpartition(avg_ratings, -4)[-4:]
+# ind2 = ratings_data['2movie_id'][ind]
+# print items['movie title'][ind2]
 
 
-# In[33]:
-
-did_rate
 
 
-# In[34]:
+#TODO: NEW VALUES APPENDED IN WRONG ORDER!!!!!!!!!!!!!!!!!!!!1
 
-print did_rate
-
-
-# In[35]:
-
-did_rate.shape
-
-
-# In[36]:
-
-# Simple explanation of what it means to normalize a dataset
-
-a = [10, 20, 30]
-aSum = sum(a)
-
-
-# In[37]:
-
-print aSum
-
-
-# In[38]:
-
-aMean = aSum / 3
-
-
-# In[39]:
-
-print aMean
-
-
-# In[40]:
-
-aMean = mean(a)
-print aMean
-
-
-# In[41]:
-
-a = [10 - aMean, 20 - aMean, 30 - aMean]
-print a
-
-
-# In[42]:
-
-print ratings
-'''
-
-# In[43]:
-
-# a function that normalizes a dataset
+#print "check,",did_rate[1183][233]	
 
 def normalize_ratings(ratings, did_rate):
     num_movies = ratings.shape[0]
@@ -273,99 +187,57 @@ def normalize_ratings(ratings, did_rate):
         # Get all the indexes where there is a 1
         idx = np.where(did_rate[i] == 1)[0]
         #  Calculate mean rating of ith movie only from user's that gave a rating
-        ratings_mean[i] = mean(ratings[i, idx])
+        ratings_mean[i] = np.mean(ratings[i, idx])
         ratings_norm[i, idx] = ratings[i, idx] - ratings_mean[i]
     
     return ratings_norm, ratings_mean
 
-        
-    
-
-
 # In[44]:
-
 # Normalize ratings
 
 ratings, ratings_mean = normalize_ratings(ratings, did_rate)
 
-print ratings.tail()
-
-# In[45]:
-
 # Update some key variables now
-'''
-num_users = ratings.shape[1]
+
+num_users = ratings.shape[1] #num_users gets updated i.e. increases by 1
 num_features = 3
 
 
-# In[46]:
-
-# Simple explanation of what it means to 'vectorize' a linear regression
-'''
-'''
-X = array([[1, 2], [1, 5], [1, 9]])
-Theta = array([[0.23], [0.34]])
-
-
-# In[47]:
-
-print X
-
-
-# In[48]:
-
-print Theta
-
-
-# In[49]:
-
-Y = X.dot(Theta)
-print Y
-
-'''
-
-# In[50]:
-
 # Initialize Parameters theta (user_prefs), X (movie_features)
-'''
-movie_features = random.randn( num_movies, num_features )
-user_prefs = random.randn( num_users, num_features )
-initial_X_and_theta = r_[movie_features.T.flatten(), user_prefs.T.flatten()]
+
+movie_features = np.random.randn( num_movies, num_features )
+user_prefs = np.random.randn( num_users, num_features )
+initial_X_and_theta = np.r_[movie_features.T.flatten(), user_prefs.T.flatten()]
 
 
 # In[51]:
-
 print movie_features
 
 
 # In[52]:
-
 print user_prefs
 
 
 # In[53]:
-
 print initial_X_and_theta
 
 
 # In[54]:
-
-initial_X_and_theta.shape
+print initial_X_and_theta.shape
 
 
 # In[55]:
-
-movie_features.T.flatten().shape
+print movie_features.T.flatten().shape
 
 
 # In[56]:
 
-user_prefs.T.flatten().shape
+print user_prefs.T.flatten().shape
 
 
 # In[57]:
 
-initial_X_and_theta
+print initial_X_and_theta
 
 
 # In[58]:
@@ -395,18 +267,17 @@ def calculate_gradient(X_and_theta, ratings, did_rate, num_users, num_movies, nu
 	theta_grad = difference.T.dot( X ) + reg_param * theta
 	
 	# wrap the gradients back into a column vector 
-	return r_[X_grad.T.flatten(), theta_grad.T.flatten()]
+	return np.r_[X_grad.T.flatten(), theta_grad.T.flatten()]
 
 
 # In[60]:
 
 def calculate_cost(X_and_theta, ratings, did_rate, num_users, num_movies, num_features, reg_param):
 	X, theta = unroll_params(X_and_theta, num_users, num_movies, num_features)
-	
 	# we multiply (element-wise) by did_rate because we only want to consider observations for which a rating was given
-	cost = sum( (X.dot( theta.T ) * did_rate - ratings) ** 2 ) / 2
+	cost = np.sum( (X.dot( theta.T ) * did_rate - ratings) ** 2 ) / 2
 	# '**' means an element-wise power
-	regularization = (reg_param / 2) * (sum( theta**2 ) + sum(X**2))
+	regularization = (reg_param / 2) * (np.sum( theta**2 ) + np.sum(X**2))
 	return cost + regularization
 
 
@@ -428,11 +299,7 @@ reg_param = 30
 
 # perform gradient descent, find the minimum cost (sum of squared errors) and optimal values of X (movie_features) and Theta (user_prefs)
 
-minimized_cost_and_optimal_params = optimize.fmin_cg(calculate_cost, fprime=calculate_gradient, x0=initial_X_and_theta,args=(ratings, did_rate, num_users, num_movies, num_features, reg_param), 								maxiter=100, disp=True, full_output=True ) 
-
-
-# In[ ]:
-
+minimized_cost_and_optimal_params = optimize.fmin_cg(calculate_cost, fprime=calculate_gradient, x0=initial_X_and_theta, args=(ratings, did_rate, num_users, num_movies, num_features, reg_param), maxiter=100, disp=True, full_output=True ) 
 cost, optimal_movie_features_and_user_prefs = minimized_cost_and_optimal_params[1], minimized_cost_and_optimal_params[0]
 
 
@@ -441,46 +308,12 @@ cost, optimal_movie_features_and_user_prefs = minimized_cost_and_optimal_params[
 # unroll once again
 
 movie_features, user_prefs = unroll_params(optimal_movie_features_and_user_prefs, num_users, num_movies, num_features)
-
-
-# In[ ]:
-
-print movie_features
-
-
-# In[ ]:
-
 print user_prefs
-
-
-# In[ ]:
-
 # Make some predictions (movie recommendations). Dot product
-
 all_predictions = movie_features.dot( user_prefs.T )
-
-
-# In[ ]:
-
-print all_predictions
-
-
-# In[ ]:
-
 # add back the ratings_mean column vector to my (our) predictions
-
 predictions_for_nikhil = all_predictions[:, 0:1] + ratings_mean
-
-
-# In[ ]:
-
 print predictions_for_nikhil
-
-
-# In[ ]:
-
 print newuser_ratings
 
-
-
-'''
+#TODO: Add recommended movie names!!!!!!!!1
