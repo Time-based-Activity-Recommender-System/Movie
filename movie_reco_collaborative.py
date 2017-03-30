@@ -319,10 +319,10 @@ print predictions_for_nikhil
 # avg_ratings = ratings.sum(0)/(ratings != 0).sum(0)
 
 # print avg_ratings
-ind = np.argpartition(predictions_for_nikhil, -4)[-4:]
-ind2 = ratings_data['2movie_id'][ind]
-print items['movie title'][ind2]
-
-#TODO: Add recommended movie names!!!!!!!!1
+ind = np.argpartition(predictions_for_nikhil, -1)[-5:]
+print ind
+for i in range(len(ind)):
+	ind2 = ratings_data['2movie_id'][i]
+	print items['movie title'][ind2]
 
 
